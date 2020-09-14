@@ -15,13 +15,5 @@ namespace BBC
             }
         }
 
-        [Fact]
-        public void Test2()
-        {
-            using (IWebDriver driver = new ChromeDriver())
-            {
-                driver.Navigate().GoToUrl("https://www.bbc.com");
-            }
-        }
     }
 }
