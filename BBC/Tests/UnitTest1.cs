@@ -1,4 +1,5 @@
 using System;
+using BBC.Pages;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using OpenQA.Selenium;
@@ -8,22 +9,26 @@ using Xunit;
 
 namespace BBC
 {
-    public class UnitTest1
+    public class UnitTest1 : BaseTest
     {
         private const string HomeUrl = "https://www.bbc.com";
         private string expectedNameOfHeadlineArticle = "Poisoned Navalny 'will return to Russia'";
         private string expectedSecondaryArticleName = "UK government under pressure over lack of tests";
         private int amountOfSecondaryArticle = 15;
         private string expectegPageTitle = "How to share your questions, stories, pictures and videos with BBC News - BBC News";
+       
 
         [Fact]
         public void CheckNameOfHeadLineArticle()
         {
             using (IWebDriver driver = new ChromeDriver())
             {
+               
+
                 driver.Navigate().GoToUrl(HomeUrl);
                 IWebElement newsElement = driver.FindElement(By.XPath(".//div[@id='orb-nav-links']//a[contains(text(), 'News')]"));
                 newsElement.Click();
+                //GetBasePage().ImplicitWait(50);
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(50);
                 IWebElement nameOfHeadlineArticle =
                     driver.FindElement(By.XPath(".//div[@data-entityid='container-top-stories#1']//div[contains(@class, 'block@m')]//h3"));
@@ -349,5 +354,75 @@ namespace BBC
             }
         }
 
+        [Fact]
+        [Obsolete]
+        public void SubmitFormWithEmptyTextFieldFortStory()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                driver.Navigate().GoToUrl(HomeUrl);
+
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
+                IWebElement agreeCookies = driver.FindElement(By.XPath(".//button[@id='bbcprivacy-continue-button']"));
+                wait.Until(ExpectedConditions.ElementToBeClickable(agreeCookies)).Click();
+                IWebElement yesCookies = driver.FindElement(By.XPath(".//button[@id='bbccookies-continue-button']"));
+                wait.Until(ExpectedConditions.ElementToBeClickable(yesCookies)).Click();
+
+                IWebElement newsElement = driver.FindElement(By.XPath(".//div[@id='orb-nav-links']//a[contains(text(), 'News')]"));
+                newsElement.Click();
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(50);
+
+                IWebElement maybeLater = driver.FindElement(By.XPath(".//button[@class='sign_in-exit']"));
+                wait.Until(ExpectedConditions.ElementToBeClickable(maybeLater)).Click();
+
+                IWebElement coronavirusElement = driver.FindElement(By.XPath(".//li[contains(@class, 'wide-menuitem-container')]//span[contains(text(), 'Coronavirus')]"));
+                coronavirusElement.Click();
+
+                IWebElement coronavirusStoriesElement = driver.FindElement(By.XPath(".//li[contains(@class, 'secondary')]//a"));
+                wait.Until(ExpectedConditions.ElementToBeClickable(coronavirusStoriesElement)).Click();
+
+
+
+                IWebElement shareStory = driver.FindElement(By.XPath(".//a[contains(@href, '10725415')]"));
+                ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView(true);", shareStory);
+                shareStory.Click();
+
+                IWebElement submitStory = driver.FindElement(By.XPath(".//button[contains(text(), 'Submit')]"));
+                ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView(true);", submitStory);
+
+                
+
+                driver.FindElement(By.XPath(".//input[@placeholder='Name']")).SendKeys("blabla");
+
+                driver.FindElement(By.XPath(".//input[@placeholder='Email address']")).SendKeys("randombutvalidemail@gmail.com");
+
+
+                driver.FindElement(By.XPath(".//input[@placeholder='Contact number ']")).SendKeys("1");
+
+
+                driver.FindElement(By.XPath(".//input[@placeholder='Location ']")).SendKeys("Chioggia");
+
+
+                driver.FindElement(By.XPath(".//span[@class='checkbox__text']//p[contains(text(), '16')]")).Click();
+
+                driver.FindElement(By.XPath(".//span[@class='checkbox__text']//p[contains(text(), 'accept')]")).Click();
+
+
+
+                submitStory.Submit();
+
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(50);
+
+                string pageName = driver.Title;
+
+                var validationErrors = driver.FindElements(By.XPath(".//div[@class='input-error-message']"));
+
+                Assert.Equal(expectegPageTitle, pageName);
+                Assert.Single(validationErrors);
+                Assert.Equal("can't be blank", validationErrors[0].Text);
+
+
+            }
+        }
     }
 }
