@@ -12,29 +12,11 @@ namespace BBC
     public class UnitTest1 
     {
         private const string HomeUrl = "https://www.bbc.com";
-        private string expectedSecondaryArticleName = "UK government under pressure over lack of tests";
-        private int amountOfSecondaryArticle = 15;
+        
         private string expectegPageTitle = "How to share your questions, stories, pictures and videos with BBC News - BBC News";
 
 
-        [Fact]
-        public void CheckSecondaryArticlesNames()
-        {
-            using (IWebDriver driver = new ChromeDriver())
-            {
-                driver.Navigate().GoToUrl(HomeUrl);
-                IWebElement newsElement = driver.FindElement(By.XPath(".//div[@id='orb-nav-links']//a[contains(text(), 'News')]"));
-                newsElement.Click();
-                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(50);
-                ReadOnlyCollection<IWebElement> secondaryArticles
-                    = driver.FindElements(By.XPath(".//div[contains(@class, 'top-stories--international')]//h3[contains(@class, 'gel-pica-bold')]"));
-                int amountOfSecondaryArticles = secondaryArticles.Count;
-                Assert.Equal(expectedSecondaryArticleName, secondaryArticles[1].Text);
-                Assert.Equal(amountOfSecondaryArticle, amountOfSecondaryArticles);
-                
-
-            }
-        }
+       
 
         [Fact]
         [Obsolete]
