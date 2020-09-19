@@ -1,23 +1,23 @@
 ﻿using System;
 using OpenQA.Selenium;
-
+using OpenQA.Selenium.Chrome;
+using SeleniumExtras.PageObjects;
 
 namespace BBC.Pages
 {
     public class BasePage
     {
-        private IWebDriver driver;
+        private readonly IWebDriver Driver;
+
 
         public BasePage(IWebDriver driver)
         {
-            this.driver = driver;
+            Driver = driver;
         }
-
 
         public void ImplicitWait(long timeToWait)
         {
-            
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(timeToWait);
+            Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(timeToWait);
         }
     }
 }

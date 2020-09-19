@@ -1,43 +1,21 @@
 using System;
-using BBC.Pages;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using BBC.Pages;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using Xunit;
 
+
 namespace BBC
 {
-    public class UnitTest1 : BaseTest
+    public class UnitTest1 
     {
         private const string HomeUrl = "https://www.bbc.com";
-        private string expectedNameOfHeadlineArticle = "Poisoned Navalny 'will return to Russia'";
         private string expectedSecondaryArticleName = "UK government under pressure over lack of tests";
         private int amountOfSecondaryArticle = 15;
         private string expectegPageTitle = "How to share your questions, stories, pictures and videos with BBC News - BBC News";
-       
 
-        [Fact]
-        public void CheckNameOfHeadLineArticle()
-        {
-            using (IWebDriver driver = new ChromeDriver())
-            {
-               
-
-                driver.Navigate().GoToUrl(HomeUrl);
-                IWebElement newsElement = driver.FindElement(By.XPath(".//div[@id='orb-nav-links']//a[contains(text(), 'News')]"));
-                newsElement.Click();
-                //GetBasePage().ImplicitWait(50);
-                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(50);
-                IWebElement nameOfHeadlineArticle =
-                    driver.FindElement(By.XPath(".//div[@data-entityid='container-top-stories#1']//div[contains(@class, 'block@m')]//h3"));
-                string nameOfHeadLineArticle = nameOfHeadlineArticle.Text;
-                Assert.Equal(expectedNameOfHeadlineArticle, nameOfHeadLineArticle);
-                
-
-            }
-        }
 
         [Fact]
         public void CheckSecondaryArticlesNames()
