@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using BBC.Pages;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -11,8 +10,10 @@ namespace BBC.Tests
     {
         private const string HomeUrl = "https://www.bbc.com";
         private string expectedNameOfHeadlineArticle = "PLACEHOLDER FOR EXPECTED ARTICLE NAME'";
-        private string expectedSecondaryArticleName = "UK government under pressure over lack of tests";
+        private string expectedSecondaryArticleNameIndex1 = "Johnson considers new measures as UK cases surge";
+        private string expectedSecondaryArticleNameIndex14 = "Shakespeare play found in Scots college in Spain";
         private int amountOfSecondaryArticle = 15;
+
         
 
         [Fact]
@@ -41,15 +42,21 @@ namespace BBC.Tests
         {
             using (IWebDriver driver = new ChromeDriver())
             {
+                //Arrange
                 driver.Navigate().GoToUrl(HomeUrl);
-                IWebElement newsElement = driver.FindElement(By.XPath(".//div[@id='orb-nav-links']//a[contains(text(), 'News')]"));
-                newsElement.Click();
-                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(50);
-                ReadOnlyCollection<IWebElement> secondaryArticles
-                    = driver.FindElements(By.XPath(".//div[contains(@class, 'top-stories--international')]//h3[contains(@class, 'gel-pica-bold')]"));
-                int amountOfSecondaryArticles = secondaryArticles.Count;
-                Assert.Equal(expectedSecondaryArticleName, secondaryArticles[1].Text);
-                Assert.Equal(amountOfSecondaryArticle, amountOfSecondaryArticles);
+                var getNewsPage = new NewsPage(driver);
+                var getBasePage = new BasePage(driver);
+
+                //Act
+                getNewsPage.ClickOnNewsElement();
+                getBasePage.ImplicitWait(50);
+                ReadOnlyCollection<IWebElement> secondaryArticles = getNewsPage.GetSecondaryArticles();
+                
+
+                //Assert
+                Assert.Equal(expectedSecondaryArticleNameIndex1, secondaryArticles[1].Text);
+                Assert.Equal(expectedSecondaryArticleNameIndex14, secondaryArticles[14].Text);
+                Assert.Equal(amountOfSecondaryArticle, getNewsPage.SecondaryArticlesAmount());
 
 
             }
