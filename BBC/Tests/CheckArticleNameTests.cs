@@ -33,7 +33,7 @@ namespace BBC.Tests
         }
 
         [Fact]
-        public void CheckSecondaryArticlesName()
+        public void CheckSecondaryArticlesNames()
         {
             
             //Arrange

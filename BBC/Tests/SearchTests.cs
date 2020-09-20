@@ -9,6 +9,8 @@ namespace BBC.Tests
 {
     public class SearchTests
     {
+        private readonly string TextOfCategory = "World";
+
         [Fact]
         [Obsolete]
         public void SearchByCategoryKeyword()
@@ -18,27 +20,24 @@ namespace BBC.Tests
             var getNewsPage = new NewsPage(driver);
             var getBasePage = new BasePage(driver);
             var getCookiesPage = new CookiesPage(driver);
+            var getSignInPage = new SignInPage(driver);
+            var getSearchPage = new SearchPage(driver);
             
 
             //Act
             getBasePage.OpenBBCHomePage();
             getCookiesPage.AgreeToAllTheCookies();
             getNewsPage.ClickOnNewsElement();
+            getBasePage.ImplicitWait();
+            getSearchPage.GetTextOfCategoryWorld();
+            getSignInPage.ClickOnSignInLaterButton();
+            getSearchPage.PasteTextOfChosenCategoryIntoSearchField();
+            getSearchPage.ClickOnSearchButton();
             getBasePage.WaitForPageLoadComplete();
 
 
-
-
-
-
-            IWebElement maybeLater = driver.FindElement(By.XPath(".//button[@class='sign_in-exit']"));
-            maybeLater.Click();
-            IWebElement categoryKeys = driver.FindElement(By.XPath(".//nav[@class='nw-c-nav__wide']//a[contains(@href, 'world')]"));
-            string categoryKeyss = categoryKeys.Text;
-            driver.FindElement(By.XPath(".//input[@id='orb-search-q']")).SendKeys(categoryKeyss);
-            driver.FindElement(By.XPath(".//button[@id='orb-search-button']")).Click();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(50);
-            Assert.Contains("World", driver.FindElement(By.XPath(".//a//span[contains(text(), 'End:')]")).Text);
+            //Assert
+            Assert.Contains(TextOfCategory, getSearchPage.NameOfFirstArticleInSearchByCategoryResults());
         }
     }
 }
