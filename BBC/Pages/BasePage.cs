@@ -41,5 +41,11 @@ namespace BBC.Pages
         {
             Driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(50);
         }
+
+        public void ScrollTillElementIsVisible(IWebElement element)
+        {
+            IJavaScriptExecutor je = (IJavaScriptExecutor)Driver;
+            je.ExecuteScript("arguments[0].scrollIntoView(true);", element);
+        }
     }
 }

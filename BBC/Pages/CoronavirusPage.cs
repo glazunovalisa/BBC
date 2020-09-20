@@ -17,7 +17,9 @@ namespace BBC.Pages
             => Driver.FindElement(By.XPath(".//li[contains(@class, 'wide-menuitem-container')]//span[contains(text(), 'Coronavirus')]"));
         
         private IWebElement CoronavirusStoriesElement => Driver.FindElement(By.XPath(".//li[contains(@class, 'secondary')]//a"));
-        
+
+        private IWebElement ShareStoryElement => Driver.FindElement(By.XPath(".//a[contains(@href, '10725415')]"));
+
 
         public void ClickOnCoronavirusElement()
         {
@@ -31,6 +33,14 @@ namespace BBC.Pages
 
             getBasePage.WaitForElementToBeClickable(50, CoronavirusStoriesElement);
             CoronavirusStoriesElement.Click();
+        }
+
+        public void ClickOnShareStoryElement()
+        {
+            var getBasePage = new BasePage(Driver);
+
+            getBasePage.ScrollTillElementIsVisible(ShareStoryElement);
+            ShareStoryElement.Click();
         }
     }
 }
