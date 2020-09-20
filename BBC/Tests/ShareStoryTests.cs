@@ -20,27 +20,16 @@ namespace BBC
         [Obsolete]
         public void SubmitQuestionWithoutEnteringName()
         {
-            
+
             //Arrange
             using IWebDriver driver = new ChromeDriver();
-            var getNewsPage = new NewsPage(driver);
-            var getBasePage = new BasePage(driver);
-            var getCookiesPage = new CookiesPage(driver);
-            var getSignInPage = new SignInPage(driver);
-            var getCoronavirusPage = new CoronavirusPage(driver);
+            var getFormPage = new FormPage(driver);
             var getFormToSubmitPage = new FormToSubmitPage(driver);
             var getFormDataPage = new FormDataPage(driver);
+            var getBasePage = new BasePage(driver);
 
             //Act
-            getBasePage.OpenBBCHomePage();
-            getCookiesPage.AgreeToAllTheCookies();
-            getNewsPage.ClickOnNewsElement();
-            getBasePage.ImplicitWait();
-            getSignInPage.ClickOnSignInLaterButton();
-            getCoronavirusPage.ClickOnCoronavirusElement();
-            getCoronavirusPage.ClickOnCoronavirusStoriesElement();
-            getCoronavirusPage.ClickOnShareStoryElement();
-            getFormToSubmitPage.ScrollTillFormToSubmitIsVisible();
+            getFormPage.OpenFormToShareYourCoronavirusStory();
 
             getFormDataPage.EnterTextOfYourStory();
             getFormDataPage.EnterValidEmail();
@@ -65,24 +54,13 @@ namespace BBC
         {
             //Arrange
             using IWebDriver driver = new ChromeDriver();
-            var getNewsPage = new NewsPage(driver);
-            var getBasePage = new BasePage(driver);
-            var getCookiesPage = new CookiesPage(driver);
-            var getSignInPage = new SignInPage(driver);
-            var getCoronavirusPage = new CoronavirusPage(driver);
+            var getFormPage = new FormPage(driver);
             var getFormToSubmitPage = new FormToSubmitPage(driver);
             var getFormDataPage = new FormDataPage(driver);
+            var getBasePage = new BasePage(driver);
 
             //Act
-            getBasePage.OpenBBCHomePage();
-            getCookiesPage.AgreeToAllTheCookies();
-            getNewsPage.ClickOnNewsElement();
-            getBasePage.ImplicitWait();
-            getSignInPage.ClickOnSignInLaterButton();
-            getCoronavirusPage.ClickOnCoronavirusElement();
-            getCoronavirusPage.ClickOnCoronavirusStoriesElement();
-            getCoronavirusPage.ClickOnShareStoryElement();
-            getFormToSubmitPage.ScrollTillFormToSubmitIsVisible();
+            getFormPage.OpenFormToShareYourCoronavirusStory();
 
             getFormDataPage.EnterTextOfYourStory();
             getFormDataPage.EnterYourName();
@@ -107,23 +85,14 @@ namespace BBC
         {
             //Arrange
             using IWebDriver driver = new ChromeDriver();
-            var getNewsPage = new NewsPage(driver);
-            var getBasePage = new BasePage(driver);
-            var getCookiesPage = new CookiesPage(driver);
-            var getSignInPage = new SignInPage(driver);
-            var getCoronavirusPage = new CoronavirusPage(driver);
+            var getFormPage = new FormPage(driver);
             var getFormToSubmitPage = new FormToSubmitPage(driver);
+            var getFormDataPage = new FormDataPage(driver);
+            var getBasePage = new BasePage(driver);
 
             //Act
-            getBasePage.OpenBBCHomePage();
-            getCookiesPage.AgreeToAllTheCookies();
-            getNewsPage.ClickOnNewsElement();
-            getBasePage.ImplicitWait();
-            getSignInPage.ClickOnSignInLaterButton();
-            getCoronavirusPage.ClickOnCoronavirusElement();
-            getCoronavirusPage.ClickOnCoronavirusStoriesElement();
-            getCoronavirusPage.ClickOnShareStoryElement();
-            getFormToSubmitPage.ScrollTillFormToSubmitIsVisible();
+            getFormPage.OpenFormToShareYourCoronavirusStory();
+
             getFormToSubmitPage.SubmitYourStory();
             getBasePage.ImplicitWait();
 
@@ -142,24 +111,13 @@ namespace BBC
         {
             //Arrange
             using IWebDriver driver = new ChromeDriver();
-            var getNewsPage = new NewsPage(driver);
-            var getBasePage = new BasePage(driver);
-            var getCookiesPage = new CookiesPage(driver);
-            var getSignInPage = new SignInPage(driver);
-            var getCoronavirusPage = new CoronavirusPage(driver);
+            var getFormPage = new FormPage(driver);
             var getFormToSubmitPage = new FormToSubmitPage(driver);
             var getFormDataPage = new FormDataPage(driver);
+            var getBasePage = new BasePage(driver);
 
             //Act
-            getBasePage.OpenBBCHomePage();
-            getCookiesPage.AgreeToAllTheCookies();
-            getNewsPage.ClickOnNewsElement();
-            getBasePage.ImplicitWait();
-            getSignInPage.ClickOnSignInLaterButton();
-            getCoronavirusPage.ClickOnCoronavirusElement();
-            getCoronavirusPage.ClickOnCoronavirusStoriesElement();
-            getCoronavirusPage.ClickOnShareStoryElement();
-            getFormToSubmitPage.ScrollTillFormToSubmitIsVisible();
+            getFormPage.OpenFormToShareYourCoronavirusStory();
 
             getFormDataPage.EnterTextOfYourStory();
             getFormDataPage.EnterYourName();
@@ -184,24 +142,13 @@ namespace BBC
         {
             //Arrange
             using IWebDriver driver = new ChromeDriver();
-            var getNewsPage = new NewsPage(driver);
-            var getBasePage = new BasePage(driver);
-            var getCookiesPage = new CookiesPage(driver);
-            var getSignInPage = new SignInPage(driver);
-            var getCoronavirusPage = new CoronavirusPage(driver);
+            var getFormPage = new FormPage(driver);
             var getFormToSubmitPage = new FormToSubmitPage(driver);
             var getFormDataPage = new FormDataPage(driver);
+            var getBasePage = new BasePage(driver);
 
             //Act
-            getBasePage.OpenBBCHomePage();
-            getCookiesPage.AgreeToAllTheCookies();
-            getNewsPage.ClickOnNewsElement();
-            getBasePage.ImplicitWait();
-            getSignInPage.ClickOnSignInLaterButton();
-            getCoronavirusPage.ClickOnCoronavirusElement();
-            getCoronavirusPage.ClickOnCoronavirusStoriesElement();
-            getCoronavirusPage.ClickOnShareStoryElement();
-            getFormToSubmitPage.ScrollTillFormToSubmitIsVisible();
+            getFormPage.OpenFormToShareYourCoronavirusStory();
 
             getFormDataPage.EnterYourName();
             getFormDataPage.EnterValidEmail();
