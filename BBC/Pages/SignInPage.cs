@@ -14,11 +14,19 @@ namespace BBC.Pages
         }
 
         private IWebElement SignInLaterButton => Driver.FindElement(By.XPath(".//button[@class='sign_in-exit']"));
-        
-        
+
+        [Obsolete]
         public void ClickOnSignInLaterButton()
         {
+            var getBasePage = new BasePage(Driver);
+            
+            getBasePage.WaitForElementToBeClickable(50, SignInLaterButton);
             SignInLaterButton.Click();
+        }
+
+        public IWebElement SignIntoBBCLaterButton()
+        {
+            return SignInLaterButton;
         }
     }
 }
