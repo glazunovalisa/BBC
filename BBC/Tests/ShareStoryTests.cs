@@ -5,7 +5,7 @@ using OpenQA.Selenium.Chrome;
 using Xunit;
 
 
-namespace BBC
+namespace BBC.Tests
 {
     public class ShareStoryTests 
     {

@@ -20,7 +20,7 @@ namespace BBC.Pages
         [FindsBy(How = How.XPath, Using = "//div[@id='orb-nav-links']//a[contains(text(), 'News')]")]
         private IWebElement NewsElement { get; set; }
 
-        [FindsBy(How = How.XPath, Using = "//div[@data-entityid='container-top-stories#1']/a[contains(@class, 'anchor')]/h3")]
+        [FindsBy(How = How.XPath, Using = "//div[@data-entityid='container-top-stories#1']//div[contains(@class, 'block@m')]//a[contains(@class, 'anchor')]/h3")]
         private IWebElement NameOfHeadlineArticle { get; set; }
 
         [FindsBy(How = How.XPath, Using = "//div[contains(@class, 'top-stories--international')]//h3[contains(@class, 'gel-pica-bold')]")]
