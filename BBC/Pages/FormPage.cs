@@ -1,6 +1,6 @@
 ﻿using System;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
+using SeleniumExtras.PageObjects;
 
 namespace BBC.Pages
 {
@@ -8,10 +8,10 @@ namespace BBC.Pages
     {
         private readonly IWebDriver Driver;
 
-
         public FormPage(IWebDriver driver)
         {
             Driver = driver;
+            PageFactory.InitElements(driver, this);
         }
 
         [Obsolete]

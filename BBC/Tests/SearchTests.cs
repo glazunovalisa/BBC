@@ -3,12 +3,15 @@ using BBC.Pages;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using Xunit;
+using SeleniumExtras.PageObjects;
 
 namespace BBC.Tests
 {
-    public class SearchTests
+    public class SearchTests 
     {
         private readonly string TextOfCategory = "World";
+
+        
 
         [Fact]
         [Obsolete]
@@ -17,6 +20,8 @@ namespace BBC.Tests
             //Arrange
             using IWebDriver driver = new ChromeDriver();
             var getNewsPage = new NewsPage(driver);
+            //PageFactory.InitElements(driver, this);
+
             var getBasePage = new BasePage(driver);
             var getCookiesPage = new CookiesPage(driver);
             var getSignInPage = new SignInPage(driver);

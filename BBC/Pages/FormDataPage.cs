@@ -1,5 +1,5 @@
-﻿using System;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
+using SeleniumExtras.PageObjects;
 
 namespace BBC.Pages
 {
@@ -11,61 +11,46 @@ namespace BBC.Pages
         public FormDataPage(IWebDriver driver)
         {
             Driver = driver;
+            PageFactory.InitElements(driver, this);
         }
 
-        private IWebElement FieldForYourStory => Driver.FindElement(By.XPath(".//textarea[@placeholder='Tell us your story. ']"));
 
-        private IWebElement FieldForYourEmail => Driver.FindElement(By.XPath(".//input[@placeholder='Email address']"));
+        [FindsBy(How = How.XPath, Using = "//textarea[@placeholder='Tell us your story. ']")]
+        private IWebElement FieldForYourStory { get; set; }
 
-        private IWebElement FieldForYourPhoneNumber => Driver.FindElement(By.XPath(".//input[@placeholder='Contact number ']"));
+        [FindsBy(How = How.XPath, Using = "//input[@placeholder='Email address']")]
+        private IWebElement FieldForYourEmail { get; set; }
 
-        private IWebElement FieldForLocation => Driver.FindElement(By.XPath(".//input[@placeholder='Location ']"));
+        [FindsBy(How = How.XPath, Using = "//input[@placeholder='Contact number ']")]
+        private IWebElement FieldForYourPhoneNumber { get; set; }
 
-        private IWebElement CheckBoxOlderThan16 => Driver.FindElement(By.XPath(".//span[@class='checkbox__text']//p[contains(text(), '16')]"));
+        [FindsBy(How = How.XPath, Using = "//input[@placeholder='Location ']")]
+        private IWebElement FieldForLocation { get; set; }
 
-        private IWebElement CheckboxAcceptTerms => Driver.FindElement(By.XPath(".//span[@class='checkbox__text']//p[contains(text(), 'accept')]"));
+        [FindsBy(How = How.XPath, Using = "//span[@class='checkbox__text']//p[contains(text(), '16')]")]
+        private IWebElement CheckBoxOlderThan16 { get; set; }
 
-        private IWebElement FieldForYourName => Driver.FindElement(By.XPath(".//input[@placeholder='Name']"));
+        [FindsBy(How = How.XPath, Using = "//span[@class='checkbox__text']//p[contains(text(), 'accept')]")]
+        private IWebElement CheckboxAcceptTerms { get; set; }
+
+        [FindsBy(How = How.XPath, Using = "//input[@placeholder='Name']")]
+        private IWebElement FieldForYourName { get; set; }
 
 
-        public void EnterTextOfYourStory()
-        {
-            FieldForYourStory.SendKeys("Very important story lol");
-        }
-           
-        public void EnterValidEmail()
-        {
-            FieldForYourEmail.SendKeys("randombutvalidemail@gmail.com");
-        }
+        public void EnterTextOfYourStory() => FieldForYourStory.SendKeys("Very important story lol");
 
-        public void EnterInvalidEmail()
-        {
-            FieldForYourEmail.SendKeys("randsomandinvalidemail.com");
-        }
+        public void EnterValidEmail() => FieldForYourEmail.SendKeys("randombutvalidemail@gmail.com");
 
-        public void EnterYourPhoneNumber()
-        {
-            FieldForYourPhoneNumber.SendKeys("1");
-        }
+        public void EnterInvalidEmail() => FieldForYourEmail.SendKeys("randsomandinvalidemail.com");
 
-        public void EnterYourLocation()
-        {
-            FieldForLocation.SendKeys("Chioggia");
-        }
+        public void EnterYourPhoneNumber() => FieldForYourPhoneNumber.SendKeys("1");
 
-        public void ConfirmThatYouAreOlderThan16()
-        {
-            CheckBoxOlderThan16.Click();
-        }
+        public void EnterYourLocation() => FieldForLocation.SendKeys("Chioggia");
 
-        public void AcceptTerms()
-        {
-            CheckboxAcceptTerms.Click();
-        }
+        public void ConfirmThatYouAreOlderThan16() => CheckBoxOlderThan16.Click();
 
-        public void EnterYourName()
-        {
-            FieldForYourName.SendKeys("blabla");
-        }
+        public void AcceptTerms() => CheckboxAcceptTerms.Click();
+
+        public void EnterYourName() => FieldForYourName.SendKeys("blabla");
     }
 }

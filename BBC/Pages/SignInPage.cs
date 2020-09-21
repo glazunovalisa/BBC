@@ -1,5 +1,6 @@
 ﻿using System;
 using OpenQA.Selenium;
+using SeleniumExtras.PageObjects;
 
 namespace BBC.Pages
 {
@@ -7,13 +8,16 @@ namespace BBC.Pages
     {
         private readonly IWebDriver Driver;
 
-
         public SignInPage(IWebDriver driver)
         {
             Driver = driver;
+            PageFactory.InitElements(driver, this);
         }
 
-        private IWebElement SignInLaterButton => Driver.FindElement(By.XPath(".//button[@class='sign_in-exit']"));
+
+        [FindsBy(How = How.XPath, Using = "//button[@class='sign_in-exit']")]
+        private IWebElement SignInLaterButton { get; set; }
+
 
         [Obsolete]
         public void ClickOnSignInLaterButton()
@@ -24,9 +28,7 @@ namespace BBC.Pages
             SignInLaterButton.Click();
         }
 
-        public IWebElement SignIntoBBCLaterButton()
-        {
-            return SignInLaterButton;
-        }
+
+        public IWebElement SignIntoBBCLaterButton() => SignInLaterButton;
     }
 }

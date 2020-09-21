@@ -1,6 +1,5 @@
 ﻿using System;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.PageObjects;
 
@@ -18,17 +17,12 @@ namespace BBC.Pages
         public BasePage(IWebDriver driver)
         {
             Driver = driver;
+            PageFactory.InitElements(driver, this);
         }
 
-        public void ImplicitWait()
-        {
-            Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(50);
-        }
+        public void ImplicitWait() => Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(50);
 
-        public void OpenBBCHomePage()
-        {
-            Driver.Navigate().GoToUrl(HomeUrl);
-        }
+        public void OpenBBCHomePage() => Driver.Navigate().GoToUrl(HomeUrl);
 
         [Obsolete]
         public void WaitForElementToBeClickable(long timeToWait, IWebElement element)
@@ -37,10 +31,7 @@ namespace BBC.Pages
             wait.Until(ExpectedConditions.ElementToBeClickable(element));
         }
 
-        public void WaitForPageLoadComplete()
-        {
-            Driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(50);
-        }
+        public void WaitForPageLoadComplete() => Driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(50);
 
         public void ScrollTillElementIsVisible(IWebElement element)
         {

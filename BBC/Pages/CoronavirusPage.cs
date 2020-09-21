@@ -1,5 +1,6 @@
 ﻿using System;
 using OpenQA.Selenium;
+using SeleniumExtras.PageObjects;
 
 namespace BBC.Pages
 {
@@ -7,24 +8,24 @@ namespace BBC.Pages
     {
         private readonly IWebDriver Driver;
 
-
         public CoronavirusPage(IWebDriver driver)
         {
             Driver = driver;
+            PageFactory.InitElements(driver, this);
         }
 
-        private IWebElement CoronavirusElement
-            => Driver.FindElement(By.XPath(".//li[contains(@class, 'wide-menuitem-container')]//span[contains(text(), 'Coronavirus')]"));
-        
-        private IWebElement CoronavirusStoriesElement => Driver.FindElement(By.XPath(".//li[contains(@class, 'secondary')]//a"));
 
-        private IWebElement ShareStoryElement => Driver.FindElement(By.XPath(".//a[contains(@href, '10725415')]"));
+        [FindsBy(How = How.XPath, Using = "//li[contains(@class, 'wide-menuitem-container')]//span[contains(text(), 'Coronavirus')]")]
+        private IWebElement CoronavirusElement { get; set; }
+
+        [FindsBy(How = How.XPath, Using = "//li[contains(@class, 'secondary')]//a")]
+        private IWebElement CoronavirusStoriesElement { get; set; }
+
+        [FindsBy(How = How.XPath, Using = "//a[contains(@href, '10725415')]")]
+        private IWebElement ShareStoryElement { get; set; }
 
 
-        public void ClickOnCoronavirusElement()
-        {
-            CoronavirusElement.Click();
-        }
+        public void ClickOnCoronavirusElement() => CoronavirusElement.Click();
 
         [Obsolete]
         public void ClickOnCoronavirusStoriesElement()

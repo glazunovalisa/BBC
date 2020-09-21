@@ -1,6 +1,8 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using OpenQA.Selenium;
+using SeleniumExtras.PageObjects;
+using FindsByAttribute = SeleniumExtras.PageObjects.FindsByAttribute;
+using How = SeleniumExtras.PageObjects.How;
 
 namespace BBC.Pages
 {
@@ -12,13 +14,16 @@ namespace BBC.Pages
         public FormToSubmitPage(IWebDriver driver)
         {
             Driver = driver;
+            PageFactory.InitElements(Driver, this);
         }
 
-        private IWebElement SubmitStoryButton => Driver.FindElement(By.XPath(".//button[contains(text(), 'Submit')]"));
+        [FindsBy(How = How.XPath, Using = "//button[contains(text(), 'Submit')]")]
+        private IWebElement SubmitStoryButton { get; set; }
 
-        private ReadOnlyCollection<IWebElement> ValidationErrors => Driver.FindElements(By.XPath(".//div[@class='input-error-message']"));
+        [FindsBy(How = How.XPath, Using = "//div[@class='input-error-message']")]
+        private IList<IWebElement> ValidationErrors { get; set; }
 
-        
+
         public void ScrollTillFormToSubmitIsVisible()
         {
             var getBasePage = new BasePage(Driver);
@@ -26,24 +31,12 @@ namespace BBC.Pages
             getBasePage.ScrollTillElementIsVisible(SubmitStoryButton);
         }
 
-        public void SubmitYourStory()
-        {
-            SubmitStoryButton.Submit();
-        }
+        public void SubmitYourStory() => SubmitStoryButton.Submit();
 
-        public ReadOnlyCollection<IWebElement> GetValidationErrors()
-        {
-            return ValidationErrors;
-        }
+        public IList<IWebElement> GetValidationErrors() => ValidationErrors;
 
-        public int AmountOfValidationErrors()
-        {
-            return ValidationErrors.Count;
-        }
+        public int AmountOfValidationErrors() => ValidationErrors.Count;
 
-        public string ActualPageTitle()
-        {
-            return Driver.Title;
-        }
+        public string ActualPageTitle() => Driver.Title;
     }
 }

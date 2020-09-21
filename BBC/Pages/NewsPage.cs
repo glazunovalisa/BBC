@@ -1,51 +1,38 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Support.PageObjects;
+using SeleniumExtras.PageObjects;
+using FindsByAttribute = SeleniumExtras.PageObjects.FindsByAttribute;
+using How = SeleniumExtras.PageObjects.How;
 
 namespace BBC.Pages
 {
     public class NewsPage
     {
-
         private readonly IWebDriver Driver;
-
 
         public NewsPage(IWebDriver driver)
         {
             Driver = driver;
+            PageFactory.InitElements(driver, this);
         }
 
-        private IWebElement NewsElement
-            => Driver.FindElement(By.XPath(".//div[@id='orb-nav-links']//a[contains(text(), 'News')]"));
 
-        private IWebElement NameOfHeadlineArticle
-            => Driver.FindElement(By.XPath(".//div[@data-entityid='container-top-stories#1']//div[contains(@class, 'block@m')]//a[contains(@class, 'anchor')]"));
+        [FindsBy(How = How.XPath, Using = "//div[@id='orb-nav-links']//a[contains(text(), 'News')]")]
+        private IWebElement NewsElement { get; set; }
 
-        private ReadOnlyCollection<IWebElement> SecondaryArticles
-            => Driver.FindElements(By.XPath(".//div[contains(@class, 'top-stories--international')]//h3[contains(@class, 'gel-pica-bold')]"));
+        [FindsBy(How = How.XPath, Using = "//div[@data-entityid='container-top-stories#1']/a[contains(@class, 'anchor')]/h3")]
+        private IWebElement NameOfHeadlineArticle { get; set; }
 
-
-        
+        [FindsBy(How = How.XPath, Using = "//div[contains(@class, 'top-stories--international')]//h3[contains(@class, 'gel-pica-bold')]")]
+        private IList<IWebElement> SecondaryArticles { get; set; }
 
 
-        public void ClickOnNewsElement()
-        {
-            NewsElement.Click();
-        }
+        public void ClickOnNewsElement() => NewsElement.Click();
 
-        public string GetNameOfHeadlineArticle()
-        {
-            return NameOfHeadlineArticle.Text;
-        }
+        public string GetNameOfHeadlineArticle() => NameOfHeadlineArticle.Text;
 
-        public ReadOnlyCollection<IWebElement> GetSecondaryArticles()
-        {
-            return SecondaryArticles;
-        }
+        public IList<IWebElement> GetSecondaryArticles() => SecondaryArticles;
 
-        public int SecondaryArticlesAmount()
-        {
-            return SecondaryArticles.Count;
-        }
+        public int SecondaryArticlesAmount() => SecondaryArticles.Count;
     }
 }

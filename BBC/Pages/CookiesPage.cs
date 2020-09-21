@@ -1,5 +1,6 @@
 ﻿using System;
 using OpenQA.Selenium;
+using SeleniumExtras.PageObjects;
 
 namespace BBC.Pages
 {
@@ -7,26 +8,26 @@ namespace BBC.Pages
     {
         private readonly IWebDriver Driver;
 
-
         public CookiesPage(IWebDriver driver)
         {
             Driver = driver;
+            PageFactory.InitElements(driver, this);
         }
 
-        private IWebElement ChangesInCookiesButton => Driver.FindElement(By.XPath(".//button[@id='bbcprivacy-continue-button']"));
-        private IWebElement IAgreeToCookiesButton => Driver.FindElement(By.XPath(".//button[@id='bbccookies-continue-button']"));
 
-      
-        public void ClickOnOKToChangesInCookiesButton()
-        {
-            ChangesInCookiesButton.Click();
-        }
+        [FindsBy(How = How.XPath, Using = "//button[@id='bbcprivacy-continue-button']")]
+        private IWebElement ChangesInCookiesButton { get; set; }
 
-       
-        public void ClickOnIAgreeToCookiesButton()
-        {
-            IAgreeToCookiesButton.Click();
-        }
+        [FindsBy(How = How.XPath, Using = "//button[@id='bbccookies-continue-button']")]
+        private IWebElement IAgreeToCookiesButton { get; set; }
+
+
+
+        public void ClickOnOKToChangesInCookiesButton() => ChangesInCookiesButton.Click();
+
+        public void ClickOnIAgreeToCookiesButton() => IAgreeToCookiesButton.Click();
+
+
 
         [Obsolete]
         public void AgreeToAllTheCookies()
