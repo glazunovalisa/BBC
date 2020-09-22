@@ -27,20 +27,20 @@ namespace BBC
             getBasePage.OpenBBCHomePage();
             getCookiesPage.AgreeToAllTheCookies();
         }
-        
+
         [When(@"I click on News Tab")]
         [Obsolete]
         public void WhenIClickOnNewsTab()
         {
             var getNewsPage = new NewsPage(_driver);
             var getBasePage = new BasePage(_driver);
-            var getSignInPage = new SignInPage(_driver); 
+            var getSignInPage = new SignInPage(_driver);
 
             getNewsPage.ClickOnNewsElement();
             getBasePage.ImplicitWait();
             getSignInPage.ClickOnSignInLaterButton();
         }
-        
+
         [Then(@"I should see News page loading with the name of headline article visible on it")]
         [Obsolete]
         public void ThenIShouldSeeNewsPageLoadingWithTheNameOfHeadlineArticleVisibleOnIt()
@@ -48,6 +48,13 @@ namespace BBC
             var getNewsPage = new NewsPage(_driver);
 
             Assert.Equal(expectedNameOfHeadlineArticle, getNewsPage.GetNameOfHeadlineArticle());
+        }
+
+
+        [AfterScenario]
+        public void DisposeWebDriver()
+        {
+            _driver.Dispose();
         }
     }
 }
