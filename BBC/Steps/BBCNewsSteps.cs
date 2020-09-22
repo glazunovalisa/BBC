@@ -18,10 +18,6 @@ namespace BBC
         private readonly int amountOfSecondaryArticle = 15;
         private readonly string TextOfCategory = "World";
         private readonly string expectegPageTitle = "How to share your questions, stories, pictures and videos with BBC News - BBC News";
-        private readonly string errorNameMessage = "Name can't be blank";
-        private readonly string errorAcceptMessage = "must be accepted";
-        private readonly string errorMessage = "can't be blank";
-        private readonly string errorEmailMessage = "Email address is invalid";
 
         [Given(@"I am on the BBC home page")]
         [Obsolete]
@@ -34,7 +30,7 @@ namespace BBC
             var getCookiesPage = new CookiesPage(_driver);
 
             getBasePage.OpenBBCHomePage();
-            getCookiesPage.AgreeToAllTheCookies();
+            
         }
 
         [When(@"I click on News Tab")]
@@ -44,7 +40,9 @@ namespace BBC
             var getNewsPage = new NewsPage(_driver);
             var getBasePage = new BasePage(_driver);
             var getSignInPage = new SignInPage(_driver);
+            var getCookiesPage = new CookiesPage(_driver);
 
+            getCookiesPage.AgreeToAllTheCookies();
             getNewsPage.ClickOnNewsElement();
             getBasePage.ImplicitWait();
             getSignInPage.ClickOnSignInLaterButton();
@@ -138,6 +136,14 @@ namespace BBC
             getFormDataPage.EnterTextOfYourStory();
         }
 
+        [When(@"I enter my name")]
+        public void WhenIEnterMyName()
+        {
+            var getFormDataPage = new FormDataPage(_driver);
+
+            getFormDataPage.EnterYourName();
+        }
+
         [When(@"I enter a valid email")]
         public void WhenIEnterAValidEmail()
         {
@@ -145,6 +151,15 @@ namespace BBC
 
             getFormDataPage.EnterValidEmail();
         }
+
+        [When(@"I enter an invalid email")]
+        public void WhenIEnterAnInvalidEmail()
+        {
+            var getFormDataPage = new FormDataPage(_driver);
+
+            getFormDataPage.EnterInvalidEmail();
+        }
+
 
         [When(@"I enter a phone number")]
         public void WhenIEnterAPhoneNumber()
@@ -206,14 +221,37 @@ namespace BBC
             Assert.Equal(amountOFValidationErrors, getFormToSubmitPage.AmountOfValidationErrors());
         }
 
-        [Then(@"The error message is following: ""(.*)""")]
-        public void ThenTheErrorMessageIsFollowing(string errorMessages)
+        [Then(@"The first error message is following: ""(.*)""")]
+        public void ThenTheFirstErrorMessageIsFollowing(string errorMessage)
         {
             var getFormToSubmitPage = new FormToSubmitPage(_driver);
 
-            Assert.Equal(errorMessages, getFormToSubmitPage.GetValidationErrors()[0].Text);
+            Assert.Equal(errorMessage, getFormToSubmitPage.GetValidationErrors()[0].Text);
         }
 
+        [Then(@"The second error message is following: ""(.*)""")]
+        public void ThenTheSecondErrorMessageIsFollowing(string errorMessage)
+        {
+            var getFormToSubmitPage = new FormToSubmitPage(_driver);
+
+            Assert.Equal(errorMessage, getFormToSubmitPage.GetValidationErrors()[1].Text);
+        }
+
+        [Then(@"The third error message is following: ""(.*)""")]
+        public void ThenTheThirdErrorMessageIsFollowing(string errorMessage)
+        {
+            var getFormToSubmitPage = new FormToSubmitPage(_driver);
+
+            Assert.Equal(errorMessage, getFormToSubmitPage.GetValidationErrors()[2].Text);
+        }
+
+        [Then(@"The fourth error message is following: ""(.*)""")]
+        public void ThenTheFourthErrorMessageIsFollowing(string errorMessage)
+        {
+            var getFormToSubmitPage = new FormToSubmitPage(_driver);
+
+            Assert.Equal(errorMessage, getFormToSubmitPage.GetValidationErrors()[3].Text);
+        }
 
 
 
