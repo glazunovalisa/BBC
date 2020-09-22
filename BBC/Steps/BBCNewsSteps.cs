@@ -11,13 +11,17 @@ namespace BBC
     public class BBCNewsSteps
     {
         private IWebDriver _driver;
-        
-
+       
         private readonly string expectedNameOfHeadlineArticle = "PLACEHOLDER FOR EXPECTED HEADLINE ARTICLE NAME'";
         private readonly string expectedSecondaryArticleNameIndex0 = "Thais hold huge protest demanding reforms";
         private readonly string expectedSecondaryArticleNameIndex14 = "Shakespeare play found in Scots college in Spain";
         private readonly int amountOfSecondaryArticle = 15;
         private readonly string TextOfCategory = "World";
+        private readonly string expectegPageTitle = "How to share your questions, stories, pictures and videos with BBC News - BBC News";
+        private readonly string errorNameMessage = "Name can't be blank";
+        private readonly string errorAcceptMessage = "must be accepted";
+        private readonly string errorMessage = "can't be blank";
+        private readonly string errorEmailMessage = "Email address is invalid";
 
         [Given(@"I am on the BBC home page")]
         [Obsolete]
@@ -46,6 +50,8 @@ namespace BBC
             getSignInPage.ClickOnSignInLaterButton();
         }
 
+
+        //LoadingArticlesFeature
         [Then(@"I should see News page loading with the name of headline article visible on it")]
         [Obsolete]
         public void ThenIShouldSeeNewsPageLoadingWithTheNameOfHeadlineArticleVisibleOnIt()
@@ -79,7 +85,7 @@ namespace BBC
         }
 
 
-
+        //SearchFeature 
         [When(@"I copy the text of the category link of the headline article \(World\)")]
         public void WhenICopyTheTextOfTheCategoryLinkOfTheHeadlineArticleWorld()
         {
@@ -113,6 +119,102 @@ namespace BBC
 
             Assert.Contains(TextOfCategory, getSearchPage.NameOfFirstArticleInSearchByCategoryResults());
         }
+
+        //ShareStory Feature
+        [Given(@"I've opened the form in order to share my story")]
+        [Obsolete]
+        public void GivenIVeOpenedTheFormInOrderToShareMyStory()
+        {
+            var getFormPage = new FormPage(_driver);
+
+            getFormPage.OpenFormToShareYourCoronavirusStory();
+        }
+
+        [When(@"I enter the text of my story")]
+        public void WhenIEnterTheTextOfMyStory()
+        {
+            var getFormDataPage = new FormDataPage(_driver);
+
+            getFormDataPage.EnterTextOfYourStory();
+        }
+
+        [When(@"I enter a valid email")]
+        public void WhenIEnterAValidEmail()
+        {
+            var getFormDataPage = new FormDataPage(_driver);
+
+            getFormDataPage.EnterValidEmail();
+        }
+
+        [When(@"I enter a phone number")]
+        public void WhenIEnterAPhoneNumber()
+        {
+            var getFormDataPage = new FormDataPage(_driver);
+
+            getFormDataPage.EnterYourPhoneNumber();
+        }
+
+        [When(@"I enter a location")]
+        public void WhenIEnterALocation()
+        {
+            var getFormDataPage = new FormDataPage(_driver);
+
+            getFormDataPage.EnterYourLocation();
+        }
+
+        [When(@"I confirm that I'm over 16")]
+        public void WhenIConfirmThatIMOver()
+        {
+            var getFormDataPage = new FormDataPage(_driver);
+
+            getFormDataPage.ConfirmThatYouAreOlderThan16();
+        }
+
+        [When(@"I accept terms and conditions")]
+        public void WhenIAcceptTermsAndConditions()
+        {
+            var getFormDataPage = new FormDataPage(_driver);
+
+            getFormDataPage.AcceptTerms();
+        }
+        
+        [When(@"I submit my story")]
+        public void WhenISubmitMyStory()
+        {
+            var getFormToSubmitPage = new FormToSubmitPage(_driver);
+            var getBasePage = new BasePage(_driver);
+
+            getFormToSubmitPage.SubmitYourStory();
+            getBasePage.ImplicitWait();
+
+        }
+
+        [Then(@"I am still on the same page because the submitting wasn't successful")]
+        public void ThenIAmStillOnTheSamePageBecauseTheSubmittingWasnTSuccessful()
+        {
+            var getFormToSubmitPage = new FormToSubmitPage(_driver);
+
+            Assert.Equal(expectegPageTitle, getFormToSubmitPage.ActualPageTitle());
+        }
+
+
+        [Then(@"I get (.*) validation error")]
+        public void ThenIGetValidationError(int amountOFValidationErrors)
+        {
+            var getFormToSubmitPage = new FormToSubmitPage(_driver);
+
+            Assert.Equal(amountOFValidationErrors, getFormToSubmitPage.AmountOfValidationErrors());
+        }
+
+        [Then(@"The error message is following: ""(.*)""")]
+        public void ThenTheErrorMessageIsFollowing(string errorMessages)
+        {
+            var getFormToSubmitPage = new FormToSubmitPage(_driver);
+
+            Assert.Equal(errorMessages, getFormToSubmitPage.GetValidationErrors()[0].Text);
+        }
+
+
 
 
         [AfterScenario]

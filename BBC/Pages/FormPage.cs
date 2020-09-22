@@ -29,6 +29,7 @@ namespace BBC.Pages
             //Act
             getBasePage.OpenBBCHomePage();
             getCookiesPage.AgreeToAllTheCookies();
+            //getSignInPage.ClickOnSignInLaterButton();
             getNewsPage.ClickOnNewsElement();
             getBasePage.ImplicitWait();
             getSignInPage.ClickOnSignInLaterButton();
