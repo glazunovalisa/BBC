@@ -22,7 +22,11 @@ namespace BBC.Pages
 
         public void ImplicitWait() => Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(50);
 
-        public void OpenBBCHomePage() => Driver.Navigate().GoToUrl(HomeUrl);
+        public void OpenBBCHomePage()
+        {
+            Driver.Manage().Window.Maximize();
+            Driver.Navigate().GoToUrl(HomeUrl);
+        }
 
         [Obsolete]
         public void WaitForElementToBeClickable(long timeToWait, IWebElement element)

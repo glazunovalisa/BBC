@@ -1,6 +1,7 @@
 ﻿using BBC.Pages;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using System;
 using Xunit;
 
 namespace BBC.Tests
@@ -13,19 +14,23 @@ namespace BBC.Tests
         private readonly string expectedSecondaryArticleNameIndex14 = "Shakespeare play found in Scots college in Spain";
         private readonly int amountOfSecondaryArticle = 15;
 
-        
 
         [Fact]
+        [Obsolete]
         public void CheckNameOfHeadLineArticle()
         {
             //Arrange
             using IWebDriver driver = new ChromeDriver();
             var getNewsPage = new NewsPage(driver);
             var getBasePage = new BasePage(driver);
+            var getCookiesPage = new CookiesPage(driver);
+            var getSignInPage = new SignInPage(driver);
 
             //Act
             getBasePage.OpenBBCHomePage();
+            getCookiesPage.AgreeToAllTheCookies();
             getNewsPage.ClickOnNewsElement();
+            getSignInPage.SignIntoBBCLaterButton();
             getBasePage.ImplicitWait();
 
             //Assert
@@ -33,17 +38,22 @@ namespace BBC.Tests
         }
 
         [Fact]
-        public void CheckSecondaryArticlesNames()
+        [Obsolete]
+         public void CheckSecondaryArticlesNames()
         {
             
             //Arrange
             using IWebDriver driver = new ChromeDriver();
             var getNewsPage = new NewsPage(driver);
             var getBasePage = new BasePage(driver);
+            var getCookiesPage = new CookiesPage(driver);
+            var getSignInPage = new SignInPage(driver);
 
             //Act
             getBasePage.OpenBBCHomePage();
+            getCookiesPage.AgreeToAllTheCookies();
             getNewsPage.ClickOnNewsElement();
+            getSignInPage.ClickOnSignInLaterButton();
             getBasePage.ImplicitWait();
 
 
@@ -51,6 +61,6 @@ namespace BBC.Tests
             Assert.Equal(expectedSecondaryArticleNameIndex0, getNewsPage.GetSecondaryArticles()[0].Text);
             Assert.Equal(expectedSecondaryArticleNameIndex14, getNewsPage.GetSecondaryArticles()[14].Text);
             Assert.Equal(amountOfSecondaryArticle, getNewsPage.SecondaryArticlesAmount());
-        }
+         }
     }
 }
