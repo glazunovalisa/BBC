@@ -10,10 +10,7 @@ namespace BBC.Tests
     {
         private readonly string TextOfCategory = "World";
 
-        
-
         [Fact]
-        [Obsolete]
         public void SearchByCategoryKeyword()
         {
             //Arrange
@@ -24,7 +21,6 @@ namespace BBC.Tests
             var getSignInPage = new SignInPage(driver);
             var getSearchPage = new SearchPage(driver);
             
-
             //Act
             getBasePage.OpenBBCHomePage();
             getCookiesPage.AgreeToAllTheCookies();
@@ -35,7 +31,6 @@ namespace BBC.Tests
             getSearchPage.PasteTextOfChosenCategoryIntoSearchField();
             getSearchPage.ClickOnSearchButton();
             getBasePage.WaitForPageLoadComplete();
-
 
             //Assert
             Assert.Contains(TextOfCategory, getSearchPage.NameOfFirstArticleInSearchByCategoryResults());

@@ -6,27 +6,22 @@ using How = SeleniumExtras.PageObjects.How;
 
 namespace BBC.Pages
 {
-    public class FormToSubmitPage
-    {
-        private readonly IWebDriver Driver;
-
-
-        public FormToSubmitPage(IWebDriver driver)
+    public class FormToSubmitPage : BasePage
+    { 
+        public FormToSubmitPage(IWebDriver driver) : base (driver)
         {
-            Driver = driver;
-            PageFactory.InitElements(Driver, this);
         }
 
         [FindsBy(How = How.XPath, Using = "//button[contains(text(), 'Submit')]")]
         private IWebElement SubmitStoryButton { get; set; }
 
         [FindsBy(How = How.XPath, Using = "//div[@class='input-error-message']")]
-        private IList<IWebElement> ValidationErrors { get; set; }
+        public IList<IWebElement> ValidationErrors { get; set; }
 
 
         public void ScrollTillFormToSubmitIsVisible()
         {
-            var getBasePage = new BasePage(Driver);
+            var getBasePage = new BasePage(driver);
 
             getBasePage.ScrollTillElementIsVisible(SubmitStoryButton);
         }
@@ -37,6 +32,6 @@ namespace BBC.Pages
 
         public int AmountOfValidationErrors() => ValidationErrors.Count;
 
-        public string ActualPageTitle() => Driver.Title;
+        public string ActualPageTitle() => driver.Title;
     }
 }

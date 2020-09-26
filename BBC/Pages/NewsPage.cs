@@ -6,16 +6,11 @@ using How = SeleniumExtras.PageObjects.How;
 
 namespace BBC.Pages
 {
-    public class NewsPage
+    public class NewsPage : BasePage
     {
-        private readonly IWebDriver Driver;
-
-        public NewsPage(IWebDriver driver)
+        public NewsPage(IWebDriver driver) : base (driver)
         {
-            Driver = driver;
-            PageFactory.InitElements(driver, this);
         }
-
 
         [FindsBy(How = How.XPath, Using = "//div[@id='orb-nav-links']//a[contains(text(), 'News')]")]
         private IWebElement NewsElement { get; set; }
@@ -25,7 +20,6 @@ namespace BBC.Pages
 
         [FindsBy(How = How.XPath, Using = "//div[contains(@class, 'top-stories--international')]//h3[contains(@class, 'gel-pica-bold')]")]
         private IList<IWebElement> SecondaryArticles { get; set; }
-
 
         public void ClickOnNewsElement() => NewsElement.Click();
 

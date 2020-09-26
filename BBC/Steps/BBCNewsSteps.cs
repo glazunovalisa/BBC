@@ -10,8 +10,8 @@ namespace BBC
     [Binding]
     public class BBCNewsSteps
     {
-        private IWebDriver _driver;
-       
+        private IWebDriver _driver = new ChromeDriver();
+
         private readonly string expectedNameOfHeadlineArticle = "PLACEHOLDER FOR EXPECTED HEADLINE ARTICLE NAME'";
         private readonly string expectedSecondaryArticleNameIndex0 = "Thais hold huge protest demanding reforms";
         private readonly string expectedSecondaryArticleNameIndex14 = "Shakespeare play found in Scots college in Spain";
@@ -19,15 +19,19 @@ namespace BBC
         private readonly string TextOfCategory = "World";
         private readonly string expectegPageTitle = "How to share your questions, stories, pictures and videos with BBC News - BBC News";
 
+
+        [BeforeScenario]
+        public void MaximizeTheBrowserPage()
+        {
+            _driver.Manage().Window.Maximize();
+        }
+
         [Given(@"I am on the BBC home page")]
-        [Obsolete]
         public void GivenIAmOnTheBBCHomePage()
         {
-            _driver = new ChromeDriver();
-            _driver.Manage().Window.Maximize();
+           
 
             var getBasePage = new BasePage(_driver);
-            var getCookiesPage = new CookiesPage(_driver);
 
             getBasePage.OpenBBCHomePage();
             
@@ -253,12 +257,10 @@ namespace BBC
             Assert.Equal(errorMessage, getFormToSubmitPage.GetValidationErrors()[3].Text);
         }
 
-
-
         [AfterScenario]
         public void DisposeWebDriver()
         {
-            _driver.Dispose();
+            _driver.Quit();
         }
     }
 }

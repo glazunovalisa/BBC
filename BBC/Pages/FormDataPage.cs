@@ -3,17 +3,11 @@ using SeleniumExtras.PageObjects;
 
 namespace BBC.Pages
 {
-    public class FormDataPage
+    public class FormDataPage : BasePage
     {
-        private readonly IWebDriver Driver;
-
-
-        public FormDataPage(IWebDriver driver)
+        public FormDataPage(IWebDriver driver) : base (driver)
         {
-            Driver = driver;
-            PageFactory.InitElements(driver, this);
         }
-
 
         [FindsBy(How = How.XPath, Using = "//textarea[@placeholder='Tell us your story. ']")]
         private IWebElement FieldForYourStory { get; set; }

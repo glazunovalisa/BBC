@@ -4,16 +4,11 @@ using SeleniumExtras.PageObjects;
 
 namespace BBC.Pages
 {
-    public class CoronavirusPage
+    public class CoronavirusPage : BasePage
     {
-        private readonly IWebDriver Driver;
-
-        public CoronavirusPage(IWebDriver driver)
+        public CoronavirusPage(IWebDriver driver) : base (driver)
         {
-            Driver = driver;
-            PageFactory.InitElements(driver, this);
         }
-
 
         [FindsBy(How = How.XPath, Using = "//li[contains(@class, 'wide-menuitem-container')]//span[contains(text(), 'Coronavirus')]")]
         private IWebElement CoronavirusElement { get; set; }
@@ -30,15 +25,15 @@ namespace BBC.Pages
         [Obsolete]
         public void ClickOnCoronavirusStoriesElement()
         {
-            var getBasePage = new BasePage(Driver);
+            var getBasePage = new BasePage(driver);
 
-            getBasePage.WaitForElementToBeClickable(50, CoronavirusStoriesElement);
+            getBasePage.WaitForElementToBeClickable(timeToWait, CoronavirusStoriesElement);
             CoronavirusStoriesElement.Click();
         }
 
         public void ClickOnShareStoryElement()
         {
-            var getBasePage = new BasePage(Driver);
+            var getBasePage = new BasePage(driver);
 
             getBasePage.ScrollTillElementIsVisible(ShareStoryElement);
             ShareStoryElement.Click();

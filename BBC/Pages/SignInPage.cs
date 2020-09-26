@@ -4,30 +4,23 @@ using SeleniumExtras.PageObjects;
 
 namespace BBC.Pages
 {
-    public class SignInPage
+    public class SignInPage : BasePage
     {
-        private readonly IWebDriver Driver;
-
-        public SignInPage(IWebDriver driver)
+        public SignInPage(IWebDriver driver) : base (driver)
         {
-            Driver = driver;
-            PageFactory.InitElements(driver, this);
         }
-
 
         [FindsBy(How = How.XPath, Using = "//button[@class='sign_in-exit']")]
         private IWebElement SignInLaterButton { get; set; }
 
-
         [Obsolete]
         public void ClickOnSignInLaterButton()
         {
-            var getBasePage = new BasePage(Driver);
+            var getBasePage = new BasePage(driver);
             
-            getBasePage.WaitForElementToBeClickable(50, SignInLaterButton);
+            getBasePage.WaitForElementToBeClickable(timeToWait, SignInLaterButton);
             SignInLaterButton.Click();
         }
-
 
         public IWebElement SignIntoBBCLaterButton() => SignInLaterButton;
     }

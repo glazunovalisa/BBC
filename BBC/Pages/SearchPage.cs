@@ -3,16 +3,11 @@ using SeleniumExtras.PageObjects;
 
 namespace BBC.Pages
 {
-    public class SearchPage
+    public class SearchPage : BasePage
     {
-        private readonly IWebDriver Driver;
-
-        public SearchPage(IWebDriver driver)
+        public SearchPage(IWebDriver driver) : base (driver)
         {
-            Driver = driver;
-            PageFactory.InitElements(driver, this);
         }
-
 
         [FindsBy(How = How.XPath, Using = "//nav[@class='nw-c-nav__wide']//a[contains(@href, 'world')]")]
         private IWebElement CategoryWorld { get; set; }
@@ -25,8 +20,6 @@ namespace BBC.Pages
 
         [FindsBy(How = How.XPath, Using = "//a//span[contains(text(), 'End:')]")]
         private IWebElement NameOfFirstArticleInSearchResults { get; set; }
-
-
 
         public string GetTextOfCategoryWorld() => CategoryWorld.Text;
 

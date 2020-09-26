@@ -4,39 +4,27 @@ using SeleniumExtras.PageObjects;
 
 namespace BBC.Pages
 {
-    public class CookiesPage
+    public class CookiesPage : BasePage
     {
-        private readonly IWebDriver Driver;
-
-        public CookiesPage(IWebDriver driver)
+        public CookiesPage(IWebDriver driver) : base (driver)
         {
-            Driver = driver;
-            PageFactory.InitElements(driver, this);
         }
 
-
         [FindsBy(How = How.XPath, Using = "//button[@id='bbcprivacy-continue-button']")]
-        private IWebElement ChangesInCookiesButton { get; set; }
+        public IWebElement ChangesInCookiesButton { get; private set; }
 
         [FindsBy(How = How.XPath, Using = "//button[@id='bbccookies-continue-button']")]
-        private IWebElement IAgreeToCookiesButton { get; set; }
-
-
+        public IWebElement IAgreeToCookiesButton { get; private set; }
 
         public void ClickOnOKToChangesInCookiesButton() => ChangesInCookiesButton.Click();
 
         public void ClickOnIAgreeToCookiesButton() => IAgreeToCookiesButton.Click();
 
-
-
-        [Obsolete]
         public void AgreeToAllTheCookies()
         {
-            var getBasePage = new BasePage(Driver);
-            
-            getBasePage.WaitForElementToBeClickable(50,ChangesInCookiesButton);
+            WaitForElementToBeClickable(timeToWait,ChangesInCookiesButton);
             ClickOnOKToChangesInCookiesButton();
-            getBasePage.WaitForElementToBeClickable(50, IAgreeToCookiesButton);
+            WaitForElementToBeClickable(timeToWait, IAgreeToCookiesButton);
             ClickOnIAgreeToCookiesButton();
         }
     }
