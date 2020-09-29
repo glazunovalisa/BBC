@@ -60,7 +60,6 @@ namespace BBC
             Assert.AreEqual(expectedNameOfHeadlineArticle, NewsPage.GetNameOfHeadlineArticle());
         }
 
-
         [Then(@"I should see News page loading with 15 secondary articles on it")]
         public void ThenIShouldSeeNewsPageLoadingWithSecondaryArticlesOnIt()
         {
@@ -103,7 +102,39 @@ namespace BBC
         {
             FormPage.OpenFormToShareYourCoronavirusStory();
         }
-     
+
+        [When(@"I fill out the form without entering my name")]
+        public void WhenIFillOutTheFormWithoutEnteringMyName()
+        {
+            FormDataPage.FillOutFormWithoutEnteringName();
+            FormToSubmitPage.SubmitYourStory();
+            BasePage.ImplicitWait();
+        }
+
+        [When(@"I fill out the fowm without agreeing to terms")]
+        public void WhenIFillOutTheFowmWithoutAgreeingToTerms()
+        {
+            FormDataPage.FillOutFormWithoutAgreeingToTerms();
+            FormToSubmitPage.SubmitYourStory();
+            BasePage.ImplicitWait();
+        }
+
+        [When(@"I fill out the worm using using invalid email")]
+        public void WhenIFillOutTheWormUsingUsingInvalidEmail()
+        {
+            FormDataPage.FillOutFormUsingInvalidEmail();
+            FormToSubmitPage.SubmitYourStory();
+            BasePage.ImplicitWait();
+        }
+
+        [When(@"I fill out the form without entering any message into text field")]
+        public void WhenIFillOutTheFormWithoutEnteringAnyMessageIntoTextField()
+        {
+            FormDataPage.FillOutFormWithoutEnteringStoryText();
+            FormToSubmitPage.SubmitYourStory();
+            BasePage.ImplicitWait();
+        }
+
         [When(@"I submit my story")]
         public void WhenISubmitMyStory()
         {
@@ -117,8 +148,7 @@ namespace BBC
             Assert.AreEqual(expectegPageTitle, FormToSubmitPage.ActualPageTitle());
         }
 
-
-        [Then(@"I get (.*) validation error")]
+        [Then(@"I get (.*) validation error\(s\)")]
         public void ThenIGetValidationError(int amountOFValidationErrors)
         {
             Assert.AreEqual(amountOFValidationErrors, FormToSubmitPage.AmountOfValidationErrors());
