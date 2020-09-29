@@ -5,8 +5,8 @@
 
 
 Background: 
-Given I am on the BBC home page
-When I click on News Tab
+        Given I am on the BBC home page
+        When I click on News Tab
 
 Scenario: Headline article name loaded successfully
 	Then I should see News page loading with the name of headline article visible on it
