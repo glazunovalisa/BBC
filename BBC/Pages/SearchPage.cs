@@ -5,8 +5,8 @@ namespace BBC.Pages
 {
     public class SearchPage : BasePage
     {
-        [FindsBy(How = How.XPath, Using = "//nav[@class='nw-c-nav__wide']//a[contains(@href, 'world')]")]
-        public IWebElement CategoryWorld { get;  private set; }
+        [FindsBy(How = How.XPath, Using = "//div[@data-entityid='container-top-stories#1']//div[contains(@class, 'block@m')]//a[contains(@class, 'visited')]//span")]
+        public IWebElement CategoryHeadlineArticle { get; private set; }
         [FindsBy(How = How.XPath, Using = "//input[@id='orb-search-q']")]
         public IWebElement SearchField { get; private set; }
         [FindsBy(How = How.XPath, Using = "//button[@id='orb-search-button']")]
@@ -16,9 +16,9 @@ namespace BBC.Pages
 
         public SearchPage(IWebDriver driver) : base(driver) { }
  
-        public string GetTextOfCategoryWorld() => CategoryWorld.Text;
+        public string GetTextOfCategory() => CategoryHeadlineArticle.Text;
 
-        public void PasteTextOfChosenCategoryIntoSearchField() => SearchField.SendKeys(CategoryWorld.Text);
+        public void PasteTextOfChosenCategoryIntoSearchField() => SearchField.SendKeys(CategoryHeadlineArticle.Text);
 
         public void ClickOnSearchButton() => SearchButton.Click();
 

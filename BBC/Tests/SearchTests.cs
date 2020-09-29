@@ -4,8 +4,6 @@ namespace BBC.Tests
 {
     public class SearchTests : BaseTest
     {
-        private readonly string TextOfCategory = "World";
-
         [Test]
         public void SearchByCategoryKeyword()
         {
@@ -14,10 +12,12 @@ namespace BBC.Tests
 
             //Act
             CategorySearchPage.CopyTheTextOfChoosenCategory();
+            SignInPage.ClickOnSignInLaterButton();
+            string textOfCategory = SearchPage.GetTextOfCategory();
             CategorySearchPage.SearchArticlesByPastingCopiedKeywordIntoASearchField();
 
             //Assert
-            Assert.IsTrue(SearchPage.NameOfFirstArticleInSearchByCategoryResults().Contains(TextOfCategory));
+            Assert.IsTrue(SearchPage.NameOfFirstArticleInSearchByCategoryResults().Contains(textOfCategory));
         }
     }
 }

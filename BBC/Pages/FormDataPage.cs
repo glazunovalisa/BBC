@@ -29,20 +29,53 @@ namespace BBC.Pages
 
         public FormDataPage(IWebDriver driver) : base(driver) { }
 
-        public void EnterTextOfYourStory() => FieldForYourStory.SendKeys(textOfYourStory);
+        public void FillOutFormWithoutEnteringName()
+        {
+            FieldForYourStory.SendKeys(textOfYourStory);
+            FillOutPrincipalFields();
+            TickCheckBoxes();
+        }
 
-        public void EnterValidEmail() => FieldForYourEmail.SendKeys(validEmail);
+        public void FillOutFormWithoutEnteringStoryText()
+        {
+            FillOutPrincipalFields();
+            FieldForYourName.SendKeys(yourName);
+            TickCheckBoxes();
+        }
 
-        public void EnterInvalidEmail() => FieldForYourEmail.SendKeys(invalidEmail);
+        public void FillOutFormWithoutAgreeingToTerms()
+        {
+            FillOutPrincipalFields();
+            EnterYourNameAndStory();
+            CheckBoxOlderThan16.Click();
+        }
 
-        public void EnterYourPhoneNumber() => FieldForYourPhoneNumber.SendKeys(phoneNumber);
+        public void FillOutFormUsingInvalidEmail()
+        {
+            EnterYourNameAndStory();
+            FieldForYourEmail.SendKeys(invalidEmail);
+            FieldForYourPhoneNumber.SendKeys(phoneNumber);
+            FieldForLocation.SendKeys(city);
+            TickCheckBoxes();
+        }
 
-        public void EnterYourLocation() => FieldForLocation.SendKeys(city);
+        private void TickCheckBoxes()
+        {
+            CheckBoxOlderThan16.Click();
+            CheckboxAcceptTerms.Click();
+        }
 
-        public void ConfirmThatYouAreOlderThan16() => CheckBoxOlderThan16.Click();
+        private void FillOutPrincipalFields()
+        {
+            FieldForYourEmail.SendKeys(validEmail);
+            FieldForYourPhoneNumber.SendKeys(phoneNumber);
+            FieldForLocation.SendKeys(city);
+        }
 
-        public void AcceptTerms() => CheckboxAcceptTerms.Click();
-
-        public void EnterYourName() => FieldForYourName.SendKeys(yourName);
+        private void EnterYourNameAndStory()
+        {
+            FieldForYourStory.SendKeys(textOfYourStory);
+            FieldForYourName.SendKeys(yourName);
+        }
     }
 }

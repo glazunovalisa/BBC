@@ -7,7 +7,6 @@
 Scenario: Look up articles by keyword 
 	Given I am on the BBC home page
 	When I click on News Tab
-	And I copy the text of the category link of the headline article (World)
-	And I paste copied keyword into a search field
-	And I click on Search button
+	And Copy the text of headline article's category
+	And Search articles by pasting copied word into a search field
 	Then The first article's name should contain my keyword

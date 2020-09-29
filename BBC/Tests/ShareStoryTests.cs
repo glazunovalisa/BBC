@@ -19,13 +19,7 @@ namespace BBC.Tests
             FormPage.OpenFormToShareYourCoronavirusStory();
 
             //Act
-            FormDataPage.EnterTextOfYourStory();
-            FormDataPage.EnterValidEmail();
-            FormDataPage.EnterYourPhoneNumber();
-            FormDataPage.EnterYourLocation();
-            FormDataPage.ConfirmThatYouAreOlderThan16();
-            FormDataPage.AcceptTerms();
-
+            FormDataPage.FillOutFormWithoutEnteringName(); 
             FormToSubmitPage.SubmitYourStory();
             BasePage.ImplicitWait();
 
@@ -35,7 +29,6 @@ namespace BBC.Tests
             Assert.AreEqual(errorNameMessage, FormToSubmitPage.ValidationErrors[0].Text);
         }
 
-
         [Test]
         public void SubmitQuestionWithoutAgreeingToTerms()
         {
@@ -43,13 +36,7 @@ namespace BBC.Tests
             FormPage.OpenFormToShareYourCoronavirusStory();
 
             //Act
-            FormDataPage.EnterTextOfYourStory();
-            FormDataPage.EnterYourName();
-            FormDataPage.EnterValidEmail();
-            FormDataPage.EnterYourPhoneNumber();
-            FormDataPage.EnterYourLocation();
-            FormDataPage.ConfirmThatYouAreOlderThan16();
-            
+            FormDataPage.FillOutFormWithoutAgreeingToTerms();
             FormToSubmitPage.SubmitYourStory();
             BasePage.ImplicitWait();
 
@@ -58,7 +45,6 @@ namespace BBC.Tests
             Assert.AreEqual(1, FormToSubmitPage.AmountOfValidationErrors());
             Assert.AreEqual(errorAcceptMessage, FormToSubmitPage.ValidationErrors[0].Text);
         }
-
 
         [Test]
         public void SubmitEmptyFormForQuestion()
@@ -86,14 +72,7 @@ namespace BBC.Tests
             FormPage.OpenFormToShareYourCoronavirusStory();
 
             //Act
-            FormDataPage.EnterTextOfYourStory();
-            FormDataPage.EnterYourName();
-            FormDataPage.EnterInvalidEmail();
-            FormDataPage.EnterYourPhoneNumber();
-            FormDataPage.EnterYourLocation();
-            FormDataPage.ConfirmThatYouAreOlderThan16();
-            FormDataPage.AcceptTerms();
-
+            FormDataPage.FillOutFormUsingInvalidEmail();
             FormToSubmitPage.SubmitYourStory();
             BasePage.ImplicitWait();
 
@@ -110,13 +89,7 @@ namespace BBC.Tests
             FormPage.OpenFormToShareYourCoronavirusStory();
 
             //Act
-            FormDataPage.EnterYourName();
-            FormDataPage.EnterValidEmail();
-            FormDataPage.EnterYourPhoneNumber();
-            FormDataPage.EnterYourLocation();
-            FormDataPage.ConfirmThatYouAreOlderThan16();
-            FormDataPage.AcceptTerms();
-
+            FormDataPage.FillOutFormWithoutEnteringStoryText();
             FormToSubmitPage.SubmitYourStory();
             BasePage.ImplicitWait();
 

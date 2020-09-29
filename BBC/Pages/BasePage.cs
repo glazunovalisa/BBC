@@ -6,7 +6,7 @@ using SeleniumExtras.PageObjects;
 namespace BBC.Pages
 {
     public class BasePage
-    {
+    { 
         public readonly int timeToWait = 50;
 
         public IWebDriver driver;

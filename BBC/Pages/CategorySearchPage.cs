@@ -10,8 +10,7 @@ namespace BBC.Pages
         {
             NewsPage.ClickOnNewsElement();
             ImplicitWait();
-            SearchPage.GetTextOfCategoryWorld();
-            SignInPage.ClickOnSignInLaterButton();
+            SearchPage.GetTextOfCategory();
         }
 
         public void SearchArticlesByPastingCopiedKeywordIntoASearchField()
