@@ -1,66 +1,44 @@
-﻿using BBC.Pages;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using System;
-using Xunit;
+﻿using NUnit.Framework;
 
 namespace BBC.Tests
 {
-    public class CheckArticleNameTests
+    public class CheckArticleNameTests : BaseTest
     {
-        
-        private readonly string expectedNameOfHeadlineArticle = "PLACEHOLDER FOR EXPECTED HEADLINE ARTICLE NAME'";
-        private readonly string expectedSecondaryArticleNameIndex0 = "Thais hold huge protest demanding reforms";
-        private readonly string expectedSecondaryArticleNameIndex14 = "Shakespeare play found in Scots college in Spain";
-        private readonly int amountOfSecondaryArticle = 15;
+        private readonly string expectedNameOfHeadlineArticle = "Donald Trump 'paid $750 in federal income taxes'";
+        private readonly string expectedSecondaryArticleNameIndex0 = "Covid-19 deaths near one million worldwide";
+        private readonly string expectedSecondaryArticleNameIndex13 = "NFL legend Joe Montana thwarts kidnapping attempt";
+        private readonly int amountOfSecondaryArticles = 14;
 
-
-        [Fact]
-        [Obsolete]
+        [Test]
         public void CheckNameOfHeadLineArticle()
         {
             //Arrange
-            using IWebDriver driver = new ChromeDriver();
-            var getNewsPage = new NewsPage(driver);
-            var getBasePage = new BasePage(driver);
-            var getCookiesPage = new CookiesPage(driver);
-            var getSignInPage = new SignInPage(driver);
+            CookiesPage.AgreeToAllTheCookies();
 
             //Act
-            getBasePage.OpenBBCHomePage();
-            getCookiesPage.AgreeToAllTheCookies();
-            getNewsPage.ClickOnNewsElement();
-            getSignInPage.SignIntoBBCLaterButton();
-            getBasePage.ImplicitWait();
+            NewsPage.ClickOnNewsElement();
+            SignInPage.ClickOnSignInLaterButton();
+            BasePage.ImplicitWait();
 
             //Assert
-            Assert.Equal(expectedNameOfHeadlineArticle, getNewsPage.GetNameOfHeadlineArticle());
+            Assert.AreEqual(expectedNameOfHeadlineArticle, NewsPage.GetNameOfHeadlineArticle());
         }
 
-        [Fact]
-        [Obsolete]
-         public void CheckSecondaryArticlesNames()
+        [Test]
+        public void CheckSecondaryArticlesNames()
         {
-            
             //Arrange
-            using IWebDriver driver = new ChromeDriver();
-            var getNewsPage = new NewsPage(driver);
-            var getBasePage = new BasePage(driver);
-            var getCookiesPage = new CookiesPage(driver);
-            var getSignInPage = new SignInPage(driver);
+            CookiesPage.AgreeToAllTheCookies();
 
             //Act
-            getBasePage.OpenBBCHomePage();
-            getCookiesPage.AgreeToAllTheCookies();
-            getNewsPage.ClickOnNewsElement();
-            getSignInPage.ClickOnSignInLaterButton();
-            getBasePage.ImplicitWait();
-
+            NewsPage.ClickOnNewsElement();
+            SignInPage.ClickOnSignInLaterButton();
+            BasePage.ImplicitWait();
 
             //Assert
-            Assert.Equal(expectedSecondaryArticleNameIndex0, getNewsPage.GetSecondaryArticles()[0].Text);
-            Assert.Equal(expectedSecondaryArticleNameIndex14, getNewsPage.GetSecondaryArticles()[14].Text);
-            Assert.Equal(amountOfSecondaryArticle, getNewsPage.SecondaryArticlesAmount());
-         }
+            Assert.AreEqual(expectedSecondaryArticleNameIndex0, NewsPage.SecondaryArticles[0].Text);
+            Assert.AreEqual(expectedSecondaryArticleNameIndex13, NewsPage.SecondaryArticles[13].Text);
+            Assert.AreEqual(amountOfSecondaryArticles, NewsPage.SecondaryArticlesAmount());
+        }
     }
 }

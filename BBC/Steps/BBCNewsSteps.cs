@@ -3,15 +3,16 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using TechTalk.SpecFlow;
-using Xunit;
+using NUnit.Framework;
 
 namespace BBC
 {
     [Binding]
-    public class BBCNewsSteps
+    public class BBCNewsSteps 
     {
         private IWebDriver _driver = new ChromeDriver();
 
+        private const string HomeUrl = "https://www.bbc.com";
         private readonly string expectedNameOfHeadlineArticle = "PLACEHOLDER FOR EXPECTED HEADLINE ARTICLE NAME'";
         private readonly string expectedSecondaryArticleNameIndex0 = "Thais hold huge protest demanding reforms";
         private readonly string expectedSecondaryArticleNameIndex14 = "Shakespeare play found in Scots college in Spain";
@@ -29,12 +30,7 @@ namespace BBC
         [Given(@"I am on the BBC home page")]
         public void GivenIAmOnTheBBCHomePage()
         {
-           
-
-            var getBasePage = new BasePage(_driver);
-
-            getBasePage.OpenBBCHomePage();
-            
+            _driver.Navigate().GoToUrl(HomeUrl);
         }
 
         [When(@"I click on News Tab")]
@@ -52,15 +48,13 @@ namespace BBC
             getSignInPage.ClickOnSignInLaterButton();
         }
 
-
-        //LoadingArticlesFeature
         [Then(@"I should see News page loading with the name of headline article visible on it")]
         [Obsolete]
         public void ThenIShouldSeeNewsPageLoadingWithTheNameOfHeadlineArticleVisibleOnIt()
         {
             var getNewsPage = new NewsPage(_driver);
 
-            Assert.Equal(expectedNameOfHeadlineArticle, getNewsPage.GetNameOfHeadlineArticle());
+            Assert.AreEqual(expectedNameOfHeadlineArticle, getNewsPage.GetNameOfHeadlineArticle());
         }
 
 
@@ -68,14 +62,14 @@ namespace BBC
         public void ThenIShouldSeeNewsPageLoadingWithSecondaryArticlesOnIt()
         {
             var getNewsPage = new NewsPage(_driver);
-            Assert.Equal(amountOfSecondaryArticle, getNewsPage.SecondaryArticlesAmount());
+            Assert.AreEqual(amountOfSecondaryArticle, getNewsPage.SecondaryArticlesAmount());
         }
 
         [Then(@"The name of the first secondary article is \[PLACEHOLDER]")]
         public void ThenTheNameOfTheFirstSecondaryArticleIsPLACEHOLDER()
         {
             var getNewsPage = new NewsPage(_driver);
-            Assert.Equal(expectedSecondaryArticleNameIndex0, getNewsPage.GetSecondaryArticles()[0].Text);
+            Assert.AreEqual(expectedSecondaryArticleNameIndex0, getNewsPage.SecondaryArticles[0].Text);
            
         }
 
@@ -83,11 +77,9 @@ namespace BBC
         public void ThenTheNameOfTheLastSecondaryArticleIsPLACEHOLDER()
         {
             var getNewsPage = new NewsPage(_driver);
-            Assert.Equal(expectedSecondaryArticleNameIndex14, getNewsPage.GetSecondaryArticles()[14].Text);
+            Assert.AreEqual(expectedSecondaryArticleNameIndex14, getNewsPage.SecondaryArticles[14].Text);
         }
 
-
-        //SearchFeature 
         [When(@"I copy the text of the category link of the headline article \(World\)")]
         public void WhenICopyTheTextOfTheCategoryLinkOfTheHeadlineArticleWorld()
         {
@@ -119,10 +111,9 @@ namespace BBC
         {
             var getSearchPage = new SearchPage(_driver);
 
-            Assert.Contains(TextOfCategory, getSearchPage.NameOfFirstArticleInSearchByCategoryResults());
+            Assert.IsTrue(TextOfCategory.Contains(getSearchPage.NameOfFirstArticleInSearchByCategoryResults()));
         }
 
-        //ShareStory Feature
         [Given(@"I've opened the form in order to share my story")]
         [Obsolete]
         public void GivenIVeOpenedTheFormInOrderToShareMyStory()
@@ -205,7 +196,6 @@ namespace BBC
 
             getFormToSubmitPage.SubmitYourStory();
             getBasePage.ImplicitWait();
-
         }
 
         [Then(@"I am still on the same page because the submitting wasn't successful")]
@@ -213,7 +203,7 @@ namespace BBC
         {
             var getFormToSubmitPage = new FormToSubmitPage(_driver);
 
-            Assert.Equal(expectegPageTitle, getFormToSubmitPage.ActualPageTitle());
+            Assert.AreEqual(expectegPageTitle, getFormToSubmitPage.ActualPageTitle());
         }
 
 
@@ -222,7 +212,7 @@ namespace BBC
         {
             var getFormToSubmitPage = new FormToSubmitPage(_driver);
 
-            Assert.Equal(amountOFValidationErrors, getFormToSubmitPage.AmountOfValidationErrors());
+            Assert.AreEqual(amountOFValidationErrors, getFormToSubmitPage.AmountOfValidationErrors());
         }
 
         [Then(@"The first error message is following: ""(.*)""")]
@@ -230,7 +220,7 @@ namespace BBC
         {
             var getFormToSubmitPage = new FormToSubmitPage(_driver);
 
-            Assert.Equal(errorMessage, getFormToSubmitPage.GetValidationErrors()[0].Text);
+            Assert.AreEqual(errorMessage, getFormToSubmitPage.ValidationErrors[0].Text);
         }
 
         [Then(@"The second error message is following: ""(.*)""")]
@@ -238,7 +228,7 @@ namespace BBC
         {
             var getFormToSubmitPage = new FormToSubmitPage(_driver);
 
-            Assert.Equal(errorMessage, getFormToSubmitPage.GetValidationErrors()[1].Text);
+            Assert.AreEqual(errorMessage, getFormToSubmitPage.ValidationErrors[1].Text);
         }
 
         [Then(@"The third error message is following: ""(.*)""")]
@@ -246,7 +236,7 @@ namespace BBC
         {
             var getFormToSubmitPage = new FormToSubmitPage(_driver);
 
-            Assert.Equal(errorMessage, getFormToSubmitPage.GetValidationErrors()[2].Text);
+            Assert.AreEqual(errorMessage, getFormToSubmitPage.ValidationErrors[2].Text);
         }
 
         [Then(@"The fourth error message is following: ""(.*)""")]
@@ -254,11 +244,11 @@ namespace BBC
         {
             var getFormToSubmitPage = new FormToSubmitPage(_driver);
 
-            Assert.Equal(errorMessage, getFormToSubmitPage.GetValidationErrors()[3].Text);
+            Assert.AreEqual(errorMessage, getFormToSubmitPage.ValidationErrors[3].Text);
         }
 
         [AfterScenario]
-        public void DisposeWebDriver()
+        public void QuitWebDriver()
         {
             _driver.Quit();
         }

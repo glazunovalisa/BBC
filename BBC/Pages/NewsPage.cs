@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using OpenQA.Selenium;
-using SeleniumExtras.PageObjects;
 using FindsByAttribute = SeleniumExtras.PageObjects.FindsByAttribute;
 using How = SeleniumExtras.PageObjects.How;
 
@@ -8,24 +7,18 @@ namespace BBC.Pages
 {
     public class NewsPage : BasePage
     {
-        public NewsPage(IWebDriver driver) : base (driver)
-        {
-        }
-
         [FindsBy(How = How.XPath, Using = "//div[@id='orb-nav-links']//a[contains(text(), 'News')]")]
-        private IWebElement NewsElement { get; set; }
-
+        public IWebElement NewsElement { get; private set; }
         [FindsBy(How = How.XPath, Using = "//div[@data-entityid='container-top-stories#1']//div[contains(@class, 'block@m')]//a[contains(@class, 'anchor')]/h3")]
-        private IWebElement NameOfHeadlineArticle { get; set; }
-
+        public IWebElement NameOfHeadlineArticle { get; private set; }
         [FindsBy(How = How.XPath, Using = "//div[contains(@class, 'top-stories--international')]//h3[contains(@class, 'gel-pica-bold')]")]
-        private IList<IWebElement> SecondaryArticles { get; set; }
+        public IList<IWebElement> SecondaryArticles { get;  private set; }
+
+        public NewsPage(IWebDriver driver) : base(driver) { }
 
         public void ClickOnNewsElement() => NewsElement.Click();
 
         public string GetNameOfHeadlineArticle() => NameOfHeadlineArticle.Text;
-
-        public IList<IWebElement> GetSecondaryArticles() => SecondaryArticles;
 
         public int SecondaryArticlesAmount() => SecondaryArticles.Count;
     }

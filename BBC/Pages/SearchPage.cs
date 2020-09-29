@@ -5,22 +5,17 @@ namespace BBC.Pages
 {
     public class SearchPage : BasePage
     {
-        public SearchPage(IWebDriver driver) : base (driver)
-        {
-        }
-
         [FindsBy(How = How.XPath, Using = "//nav[@class='nw-c-nav__wide']//a[contains(@href, 'world')]")]
-        private IWebElement CategoryWorld { get; set; }
-
+        public IWebElement CategoryWorld { get;  private set; }
         [FindsBy(How = How.XPath, Using = "//input[@id='orb-search-q']")]
-        private IWebElement SearchField { get; set; }
-
+        public IWebElement SearchField { get; private set; }
         [FindsBy(How = How.XPath, Using = "//button[@id='orb-search-button']")]
-        private IWebElement SearchButton { get; set; }
-
+        public IWebElement SearchButton { get; private set; }
         [FindsBy(How = How.XPath, Using = "//a//span[contains(text(), 'End:')]")]
-        private IWebElement NameOfFirstArticleInSearchResults { get; set; }
+        public IWebElement NameOfFirstArticleInSearchResults { get; private set; }
 
+        public SearchPage(IWebDriver driver) : base(driver) { }
+ 
         public string GetTextOfCategoryWorld() => CategoryWorld.Text;
 
         public void PasteTextOfChosenCategoryIntoSearchField() => SearchField.SendKeys(CategoryWorld.Text);

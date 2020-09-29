@@ -1,39 +1,23 @@
-﻿using System;
-using BBC.Pages;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using Xunit;
+﻿using NUnit.Framework;
 
 namespace BBC.Tests
 {
-    public class SearchTests 
+    public class SearchTests : BaseTest
     {
         private readonly string TextOfCategory = "World";
 
-        [Fact]
+        [Test]
         public void SearchByCategoryKeyword()
         {
-            //Arrange
-            using IWebDriver driver = new ChromeDriver();
-            var getNewsPage = new NewsPage(driver);
-            var getBasePage = new BasePage(driver);
-            var getCookiesPage = new CookiesPage(driver);
-            var getSignInPage = new SignInPage(driver);
-            var getSearchPage = new SearchPage(driver);
-            
+            //Arrange 
+            CookiesPage.AgreeToAllTheCookies();
+
             //Act
-            getBasePage.OpenBBCHomePage();
-            getCookiesPage.AgreeToAllTheCookies();
-            getNewsPage.ClickOnNewsElement();
-            getBasePage.ImplicitWait();
-            getSearchPage.GetTextOfCategoryWorld();
-            getSignInPage.ClickOnSignInLaterButton();
-            getSearchPage.PasteTextOfChosenCategoryIntoSearchField();
-            getSearchPage.ClickOnSearchButton();
-            getBasePage.WaitForPageLoadComplete();
+            CategorySearchPage.CopyTheTextOfChoosenCategory();
+            CategorySearchPage.SearchArticlesByPastingCopiedKeywordIntoASearchField();
 
             //Assert
-            Assert.Contains(TextOfCategory, getSearchPage.NameOfFirstArticleInSearchByCategoryResults());
+            Assert.IsTrue(SearchPage.NameOfFirstArticleInSearchByCategoryResults().Contains(TextOfCategory));
         }
     }
 }

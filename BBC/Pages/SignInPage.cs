@@ -1,27 +1,19 @@
-﻿using System;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using SeleniumExtras.PageObjects;
 
 namespace BBC.Pages
 {
     public class SignInPage : BasePage
     {
-        public SignInPage(IWebDriver driver) : base (driver)
-        {
-        }
-
         [FindsBy(How = How.XPath, Using = "//button[@class='sign_in-exit']")]
-        private IWebElement SignInLaterButton { get; set; }
+        public IWebElement SignInLaterButton { get; private set; }
 
-        [Obsolete]
+        public SignInPage(IWebDriver driver) : base (driver) { }
+
         public void ClickOnSignInLaterButton()
         {
-            var getBasePage = new BasePage(driver);
-            
-            getBasePage.WaitForElementToBeClickable(timeToWait, SignInLaterButton);
+            WaitForElementToBeClickable(timeToWait, SignInLaterButton);
             SignInLaterButton.Click();
         }
-
-        public IWebElement SignIntoBBCLaterButton() => SignInLaterButton;
     }
 }
